@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binance Order Book Takip | Metrader</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <!-- Firebase Config -->
+    <script src="firebase-config.js"></script>
+</head>
+<body>
+    <!-- Oturum kontrolü -->
+    <script>
+        // Firebase'in yüklenmesini bekle
+        let authInitialized = false;
+
+        function initializeFirebase() {
+            return new Promise((resolve, reject) => {
+                const unsubscribe = auth.onAuthStateChanged(user => {
+                    unsubscribe(); // Listener'ı kaldır
+                    authInitialized = true;
+                    resolve(user);
+                }, reject);
+            });
+        }
+
+        // Sayfa yüklendiğinde oturum kontrolü yap
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                console.log('Sayfa yüklendi, Firebase başlatılıyor...');
+                
+                // Firebase'in başlatılmasını bekle
+                const user = await initializeFirebase();
+                console.log('Firebase başlatıldı, kullanıcı durumu:', user ? 'Giriş yapılmış' : 'Giriş yapılmamış');
+
+                if (!user) {
+                    console.log('Kullanıcı giriş yapmamış, yönlendiriliyor...');
+                    window.location.href = 'auth.html';
+                    return;
+                }
+
+                // Kullanıcı bilgilerini header'a ekle
+                const userEmail = document.getElementById('userEmail');
+                if (userEmail) {
+                    userEmail.textContent = user.email;
+                }
+
+                console.log('Kullanıcı oturumu doğrulandı:', user.email);
+            } catch (error) {
+                console.error('Oturum kontrolü hatası:', error);
+                alert('Oturum kontrolü sırasında bir hata oluştu. Lütfen tekrar giriş yapın.');
+                window.location.href = 'auth.html';
+            }
+        });
+
+        // Çıkış yapma fonksiyonu
+        async function handleLogout() {
+            try {
+                await auth.signOut();
+                window.location.href = 'auth.html';
+            } catch (error) {
+                console.error('Çıkış yapma hatası:', error);
+                alert('Çıkış yapılırken bir hata oluştu.');
+            }
+        }
+    </script>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="header-left">
+                <img src="https://media-hosting.imagekit.io/9296fef1e4f145a1/Adobe%20Express%20-%20file.png?Expires=1838020386&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=upaEqHZ0bPFwOaTGIEZenuPMZPR-ZWXSBswut~k0kyl4JBN5HVHqdfpdNlBs3qr2yJld7Q9KPcWxp97qonwU3K8Ddh~x62683e2PHCR59vuj5~SqiWSYMZauE5ZM3FhDoQfs3srt~As7P0JxE7thkDUyHGuOufCg80kxI~QxTVwvqGmaVzrF3d7FQDVCmrMJ3QwlU68AApRZRs1sW8hSIvRN8XVF9CC515f1KNEH5yTuaiJlo5nqJDpYsikczYU0u8sSPgrnklgAtIJe-u5aloR6-2f4U2Pl-8SyJf4ePD942R~avLePF~k9Tq7pFLYnMaPob9eO~VIAzIcvheeUeA__" alt="Metrader Logo" class="header-logo">
+                <h1>Metrader Pro</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span id="userEmail"></span>
+                    <button class="logout-button" onclick="handleLogout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Çıkış Yap
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="banner">
+        <div class="banner-content">
+            <h1 class="banner-title">METRADER | Binance Order Book Alert System</h1>
+            <p class="banner-subtitle">v3.5 Pro Sürümü ile büyük emirleri anında yakala, fırsatları kaçırma! Profesyonel trading deneyimi için geliştirilmiş özel algoritma.</p>
+            <div class="banner-stats">
+                <div class="stat-item">
+                    <i class="fas fa-users"></i>
+                    <div class="stat-info">
+                        <div class="stat-value">10,000+</div>
+                        <div class="stat-label">Aktif Kullanıcı</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-bolt"></i>
+                    <div class="stat-info">
+                        <div class="stat-value">100ms</div>
+                        <div class="stat-label">Tepki Süresi</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-brain"></i>
+                    <div class="stat-info">
+                        <div class="stat-value">AI</div>
+                        <div class="stat-label">Destekli Analiz</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img src="https://media-hosting.imagekit.io/9296fef1e4f145a1/Adobe%20Express%20-%20file.png?Expires=1838020386&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=upaEqHZ0bPFwOaTGIEZenuPMZPR-ZWXSBswut~k0kyl4JBN5HVHqdfpdNlBs3qr2yJld7Q9KPcWxp97qonwU3K8Ddh~x62683e2PHCR59vuj5~SqiWSYMZauE5ZM3FhDoQfs3srt~As7P0JxE7thkDUyHGuOufCg80kxI~QxTVwvqGmaVzrF3d7FQDVCmrMJ3QwlU68AApRZRs1sW8hSIvRN8XVF9CC515f1KNEH5yTuaiJlo5nqJDpYsikczYU0u8sSPgrnklgAtIJe-u5aloR6-2f4U2Pl-8SyJf4ePD942R~avLePF~k9Tq7pFLYnMaPob9eO~VIAzIcvheeUeA__" alt="Metrader Logo" class="banner-image" style="width: 700px; height: 700px;">
+    </div>
+
+    <div class="promo-section">
+        <!-- Telegram Topluluğu Kartı -->
+        <div class="promo-card telegram-card">
+            <div class="card-icon">
+                <img src="https://telegram.org/img/t_logo.svg" alt="Telegram Logo" class="platform-logo">
+            </div>
+            <h3>Telegram Topluluğu</h3>
+            <p class="card-description">Metrader Pro ile anlık sinyaller, piyasa analizleri ve kazandıran stratejiler!</p>
+            <div class="stats-container">
+                <div class="stat-item">
+                    <span class="stat-value" data-stat="active-users">0</span>
+                    <span class="stat-label">AKTİF ÜYE</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" data-stat="online-users">0</span>
+                    <span class="stat-label">ONLİNE</span>
+                </div>
+            </div>
+            <a href="https://t.me/+0i0hjX2tHpAzOTY0" class="action-button telegram-button" target="_blank">
+                <i class="fab fa-telegram"></i>
+                Topluluğa Katıl
+                <div class="button-shine"></div>
+            </a>
+        </div>
+
+        <!-- Kazanan Takipçiler Kartı -->
+        <div class="promo-card success-card">
+            <div class="card-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Kazanan Takipçiler</h3>
+            <p class="card-description">Profesyonel trading stratejilerimizle başarıya ulaşan yatırımcılar!</p>
+            <div class="success-grid">
+                <div class="success-item">
+                    <div class="coin">BTC/USDT</div>
+                    <div class="profit profit-up">
+                        <span class="profit-value counter" data-target="287">0</span>%
+                    </div>
+                </div>
+                <div class="success-item">
+                    <div class="coin">ETH/USDT</div>
+                    <div class="profit profit-up">
+                        <span class="profit-value counter" data-target="165">0</span>%
+                    </div>
+                </div>
+                <div class="success-item">
+                    <div class="coin">SOL/USDT</div>
+                    <div class="profit profit-up">
+                        <span class="profit-value counter" data-target="412">0</span>%
+                    </div>
+                </div>
+            </div>
+            <a href="https://tr.ee/RZc5u0dWD7" class="action-button success-button" target="_blank">
+                <i class="fas fa-trophy"></i>
+                Başarı Hikayeleri
+                <div class="button-shine"></div>
+            </a>
+        </div>
+
+        <!-- Komisyon İndirimi Kartı -->
+        <div class="promo-card commission-card">
+            <div class="card-icon">
+                <img src="https://seeklogo.com/images/B/bingx-logo-0C09A379A0-seeklogo.com.png" alt="BingX Logo" class="platform-logo">
+            </div>
+            <h3>Komisyon İndirimi</h3>
+            <p class="card-description">BingX'te referans kodumuzla işlem yapın, özel komisyon indirimlerinden yararlanın!</p>
+            <div class="referral-code">
+                <span class="code">LURL4r</span>
+                <button class="copy-btn" data-code="LURL4r">
+                    <i class="far fa-copy"></i>
+                </button>
+            </div>
+            <div class="discount-info">
+                <div class="discount-item">
+                    <i class="fas fa-percent"></i>
+                    <span>Spot: 10% İndirim</span>
+                </div>
+                <div class="discount-item">
+                    <i class="fas fa-percent"></i>
+                    <span>Vadeli: 15% İndirim</span>
+                </div>
+            </div>
+            <a href="https://bingx.com/invite/LURL4r" class="action-button commission-button" target="_blank">
+                <i class="fas fa-user-plus"></i>
+                İndirimli Kayıt Ol
+                <div class="button-shine"></div>
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="app-header">
+            <div class="app-logo">
+                <i class="fa-solid fa-chart-line logo-icon"></i>
+                <h1>Binance Order Book Takip</h1>
+            </div>
+            <div class="status-indicator">
+                <span class="status-badge online">
+                    <i class="fa-solid fa-signal"></i> Canlı
+                </span>
+                <a href="https://t.me/metradertr" class="telegram-link">
+                    <i class="fa-brands fa-telegram"></i> Metrader Pro
+                </a>
+            </div>
+        </div>
+
+        <div class="market-info">
+            <div class="info-item">
+                <span class="info-label">
+                    <i class="fas fa-bitcoin"></i>
+                    Bitcoin Fiyatı
+                </span>
+                <div class="info-value">
+                    <span id="btcPrice">Yükleniyor...</span>
+                    <span class="info-change change-up" id="priceChange">
+                        <i class="fas fa-caret-up"></i>
+                        +2.5%
+                    </span>
+                </div>
+            </div>
+            <div class="info-item">
+                <span class="info-label">
+                    <i class="fas fa-chart-line"></i>
+                    24s Hacim
+                </span>
+                <div class="info-value" id="volume">Yükleniyor...</div>
+            </div>
+            <div class="info-item">
+                <span class="info-label">
+                    <i class="fas fa-arrow-up"></i>
+                    24s En Yüksek
+                </span>
+                <div class="info-value" id="high24h">Yükleniyor...</div>
+            </div>
+            <div class="info-item">
+                <span class="info-label">
+                    <i class="fas fa-arrow-down"></i>
+                    24s En Düşük
+                </span>
+                <div class="info-value" id="low24h">Yükleniyor...</div>
+            </div>
+        </div>
+        
+        <div class="settings">
+            <div class="input-group">
+                <label for="symbol"><i class="fa-solid fa-coins"></i> Sembol:</label>
+                <input type="text" id="symbol" value="BTCUSDT">
+            </div>
+            <div class="input-group">
+                <label for="threshold"><i class="fa-solid fa-filter"></i> Eşik Değeri (USDT):</label>
+                <input type="number" id="threshold" value="10000000">
+            </div>
+            <button id="startBtn"><i class="fa-solid fa-play"></i> Başlat</button>
+            <button id="stopBtn" class="danger" disabled><i class="fa-solid fa-stop"></i> Durdur</button>
+        </div>
+
+        <!-- Telegram Entegrasyonu Bölümü -->
+        <div class="telegram-integration">
+            <h2><i class="fa-brands fa-telegram"></i> Telegram Entegrasyonu</h2>
+            <div class="telegram-form">
+                <div class="input-group">
+                    <label for="botToken"><i class="fa-solid fa-key"></i> Bot Token:</label>
+                    <input type="text" id="botToken" placeholder="BotFather'dan aldığınız bot token">
+                </div>
+                <div class="input-group">
+                    <label for="chatId"><i class="fa-solid fa-user"></i> Chat ID:</label>
+                    <input type="text" id="chatId" placeholder="Mesajların gönderileceği chat ID">
+                </div>
+                <button id="saveBot" class="success"><i class="fa-solid fa-save"></i> Kaydet</button>
+                <button id="testBot"><i class="fa-solid fa-paper-plane"></i> Test</button>
+            </div>
+            <div class="telegram-status" id="telegramStatus"></div>
+            <div class="telegram-help">
+                <h3><i class="fa-solid fa-circle-info"></i> Telegram Bot Nasıl Kurulur?</h3>
+                <ol>
+                    <li>Telegram'da <a href="https://t.me/BotFather" target="_blank">@BotFather</a> ile konuşmaya başlayın</li>
+                    <li><code>/newbot</code> komutunu gönderin</li>
+                    <li>Botunuza bir isim verin</li>
+                    <li>Botunuza bir kullanıcı adı verin (sonu 'bot' ile bitmeli)</li>
+                    <li>Size verilen API anahtarını yukarıdaki "Bot Token" alanına yapıştırın</li>
+                    <li>Botunuza tıklayın ve <code>/start</code> komutunu gönderin</li>
+                    <li>Chat ID'nizi almak için:
+                        <ul>
+                            <li>Botunuza bir mesaj gönderin</li>
+                            <li>Tarayıcınızda şu adrese gidin: <code>https://api.telegram.org/bot{TOKEN}/getUpdates</code></li>
+                            <li>URL'deki {TOKEN} yerine BotFather'dan aldığınız token'ı yazın</li>
+                            <li>Açılan sayfada "chat" altındaki "id" değeri sizin Chat ID'nizdir</li>
+                            <li>Örnek yanıt: <code>{"message":{"chat":{"id":1234567890}}}</code></li>
+                        </ul>
+                    </li>
+                </ol>
+                <div class="telegram-help-note">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <p>Not: Chat ID genellikle negatif sayı (-100 ile başlayan) veya pozitif sayı olabilir. Her iki format da geçerlidir.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert-container" id="alertContainer">
+            <!-- Alert örneği -->
+            <div class="alert alert-bid">
+                <span class="alert-id">
+                    <i class="fas fa-hashtag"></i>
+                    BID_1234567
+                </span>
+                <h3>
+                    <i class="fas fa-arrow-trend-up"></i>
+                    Büyük Alış Emri Tespit Edildi
+                </h3>
+                <div class="alert-info">
+                    <span>
+                        <strong>Fiyat</strong>
+                        42,150.00 USDT
+                    </span>
+                    <span>
+                        <strong>Miktar</strong>
+                        125.45 BTC
+                    </span>
+                    <span>
+                        <strong>Toplam</strong>
+                        5,287,717.50 USDT
+                    </span>
+                </div>
+                <div class="alert-timestamp">
+                    <i class="fas fa-clock"></i>
+                    12 Mart 2024, 15:45:32
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="bids">
+                <i class="fas fa-arrow-trend-up"></i>
+                Alış Emirleri
+            </button>
+            <button class="tab-btn" data-tab="asks">
+                <i class="fas fa-arrow-trend-down"></i>
+                Satış Emirleri
+            </button>
+        </div>
+
+        <div class="orderbook-layout">
+            <div class="orderbook-column">
+                <div class="orderbook-header bids-header">
+                    <span><i class="fa-solid fa-arrow-trend-up"></i> Alış Emirleri</span>
+                    <div class="orderbook-stats">
+                        <div class="stats-item"><i class="fa-solid fa-list stats-icon"></i> <span id="bidsCount">0</span> emir</div>
+                        <div class="stats-item"><i class="fa-solid fa-money-bill-wave stats-icon"></i> <span id="bidsTotal">0</span> USDT</div>
+                    </div>
+                </div>
+                <div id="bids" class="orderbook-container tab-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fiyat (USDT)</th>
+                                <th>Miktar (BTC)</th>
+                                <th>Toplam (USDT)</th>
+                                <th>Kümülatif (USDT)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bidsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="orderbook-column">
+                <div class="orderbook-header asks-header">
+                    <span><i class="fa-solid fa-arrow-trend-down"></i> Satış Emirleri</span>
+                    <div class="orderbook-stats">
+                        <div class="stats-item"><i class="fa-solid fa-list stats-icon"></i> <span id="asksCount">0</span> emir</div>
+                        <div class="stats-item"><i class="fa-solid fa-money-bill-wave stats-icon"></i> <span id="asksTotal">0</span> USDT</div>
+                    </div>
+                </div>
+                <div id="asks" class="orderbook-container tab-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fiyat (USDT)</th>
+                                <th>Miktar (BTC)</th>
+                                <th>Toplam (USDT)</th>
+                                <th>Kümülatif (USDT)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="asksTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fa-solid fa-info-circle"></i> Hakkımızda</h3>
+                    <p>Metrader olarak kripto para piyasalarında profesyonel trading sinyalleri ve analizler sunuyoruz. Binance Order Book Alert System ile büyük işlemleri anında takip edin!</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3><i class="fa-solid fa-address-book"></i> İletişim</h3>
+                    <div class="contact-info">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>metrader07@gmail.com</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>İstanbul, Türkiye</span>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3><i class="fa-solid fa-share-nodes"></i> Sosyal Medya</h3>
+                    <div class="social-links">
+                        <a href="https://twitter.com/metradertr" class="twitter" target="_blank" title="X (Twitter)">
+                            <i class="fa-brands fa-x-twitter"></i>
+                        </a>
+                        <a href="https://t.me/metradertr" class="telegram" target="_blank" title="Telegram">
+                            <i class="fa-brands fa-telegram"></i>
+                        </a>
+                        <a href="https://instagram.com/metradertr" class="instagram" target="_blank" title="Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://tiktok.com/@metradertr" class="tiktok" target="_blank" title="TikTok">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                        <a href="https://youtube.com/@metradertr" class="youtube" target="_blank" title="YouTube">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>
+                        <i class="fa-solid fa-user-circle"></i>
+                        Kişisel Hesaplar
+                    </h3>
+                    <div class="social-links personal">
+                        <a href="https://instagram.com/g_bttl" target="_blank" class="social-link">
+                            <i class="fa-brands fa-instagram"></i>
+                            <span>Instagram</span>
+                        </a>
+                        <a href="https://tr.ee/RZc5u0dWD7" target="_blank" class="social-link">
+                            <i class="fa-brands fa-telegram"></i>
+                            <span>Telegram</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="copyright">
+                    <i class="fa-regular fa-copyright"></i>
+                    <span>2024 Metrader | Tüm hakları saklıdır</span>
+                </div>
+                <div class="last-update">
+                    <i class="fa-solid fa-refresh"></i>
+                    <span>Son Güncelleme: <span id="lastUpdateTime">-</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fa-solid fa-moon"></i>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

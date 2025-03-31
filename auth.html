@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metrader - Giriş Yap</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <!-- Firebase Config -->
+    <script src="firebase-config.js"></script>
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <!-- Giriş Formu -->
+        <div class="auth-form" id="loginForm">
+            <div class="auth-header">
+                <img src="https://media-hosting.imagekit.io/9296fef1e4f145a1/Adobe%20Express%20-%20file.png?Expires=1838020386&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=upaEqHZ0bPFwOaTGIEZenuPMZPR-ZWXSBswut~k0kyl4JBN5HVHqdfpdNlBs3qr2yJld7Q9KPcWxp97qonwU3K8Ddh~x62683e2PHCR59vuj5~SqiWSYMZauE5ZM3FhDoQfs3srt~As7P0JxE7thkDUyHGuOufCg80kxI~QxTVwvqGmaVzrF3d7FQDVCmrMJ3QwlU68AApRZRs1sW8hSIvRN8XVF9CC515f1KNEH5yTuaiJlo5nqJDpYsikczYU0u8sSPgrnklgAtIJe-u5aloR6-2f4U2Pl-8SyJf4ePD942R~avLePF~k9Tq7pFLYnMaPob9eO~VIAzIcvheeUeA__" alt="Metrader Logo" class="auth-logo">
+                <h2>Giriş Yap</h2>
+                <p>Metrader Pro'ya hoş geldiniz!</p>
+            </div>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">
+                        <i class="fas fa-envelope"></i>
+                        E-posta
+                    </label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">
+                        <i class="fas fa-lock"></i>
+                        Şifre
+                    </label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="auth-button">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Giriş Yap
+                </button>
+            </form>
+            <div class="auth-links">
+                <a href="#" onclick="toggleForms('registerForm')">Hesabınız yok mu? Kayıt olun</a>
+            </div>
+        </div>
+
+        <!-- Kayıt Formu -->
+        <div class="auth-form hidden" id="registerForm">
+            <div class="auth-header">
+                <img src="https://media-hosting.imagekit.io/9296fef1e4f145a1/Adobe%20Express%20-%20file.png?Expires=1838020386&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=upaEqHZ0bPFwOaTGIEZenuPMZPR-ZWXSBswut~k0kyl4JBN5HVHqdfpdNlBs3qr2yJld7Q9KPcWxp97qonwU3K8Ddh~x62683e2PHCR59vuj5~SqiWSYMZauE5ZM3FhDoQfs3srt~As7P0JxE7thkDUyHGuOufCg80kxI~QxTVwvqGmaVzrF3d7FQDVCmrMJ3QwlU68AApRZRs1sW8hSIvRN8XVF9CC515f1KNEH5yTuaiJlo5nqJDpYsikczYU0u8sSPgrnklgAtIJe-u5aloR6-2f4U2Pl-8SyJf4ePD942R~avLePF~k9Tq7pFLYnMaPob9eO~VIAzIcvheeUeA__" alt="Metrader Logo" class="auth-logo">
+                <h2>Kayıt Ol</h2>
+                <p>Metrader Pro ailesine katılın!</p>
+            </div>
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="registerEmail">
+                        <i class="fas fa-envelope"></i>
+                        E-posta
+                    </label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerUsername">
+                        <i class="fas fa-user"></i>
+                        Kullanıcı Adı
+                    </label>
+                    <input type="text" id="registerUsername" required minlength="3">
+                </div>
+                <div class="form-group">
+                    <label for="telegramUsername">
+                        <i class="fab fa-telegram"></i>
+                        Telegram Kullanıcı Adı
+                    </label>
+                    <input type="text" id="telegramUsername" required>
+                    <small class="telegram-info">
+                        <i class="fas fa-info-circle"></i>
+                        Telegram kullanıcı adınızı @ işareti olmadan yazın
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">
+                        <i class="fas fa-lock"></i>
+                        Şifre
+                    </label>
+                    <input type="password" id="registerPassword" required minlength="6">
+                    <small class="password-info">
+                        <i class="fas fa-info-circle"></i>
+                        En az 6 karakter uzunluğunda olmalı
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="referralCode">
+                        <i class="fas fa-ticket"></i>
+                        Referans Kodu
+                    </label>
+                    <input type="text" id="referralCode" required>
+                    <small class="referral-info">
+                        <i class="fas fa-info-circle"></i>
+                        Referans kodunu Telegram kanalımızdan alabilirsiniz:
+                        <a href="https://t.me/metradertr" target="_blank">@metradertr</a>
+                    </small>
+                </div>
+                <button type="submit" class="auth-button">
+                    <i class="fas fa-user-plus"></i>
+                    Kayıt Ol
+                </button>
+            </form>
+            <div class="auth-links">
+                <a href="#" onclick="toggleForms('loginForm')">Zaten hesabınız var mı? Giriş yapın</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Firebase'in yüklenmesini bekle
+        let authInitialized = false;
+
+        function initializeFirebase() {
+            return new Promise((resolve, reject) => {
+                const unsubscribe = auth.onAuthStateChanged(user => {
+                    unsubscribe(); // Listener'ı kaldır
+                    authInitialized = true;
+                    resolve(user);
+                }, reject);
+            });
+        }
+
+        // Loglama fonksiyonu
+        function log(level, message, data = null) {
+            const timestamp = new Date().toISOString();
+            const logMessage = `[${timestamp}] [${level}] ${message}`;
+            console.log(logMessage);
+            if (data) {
+                console.log('Data:', data);
+            }
+        }
+
+        // Form geçişleri
+        function toggleForms(showFormId) {
+            log('INFO', `Form geçişi yapılıyor: ${showFormId}`);
+            document.querySelectorAll('.auth-form').forEach(form => {
+                form.classList.add('hidden');
+            });
+            document.getElementById(showFormId).classList.remove('hidden');
+            log('INFO', `Form geçişi tamamlandı: ${showFormId}`);
+        }
+
+        // Giriş işlemi
+        async function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                log('INFO', 'Giriş işlemi başlatılıyor...', { email });
+                
+                // Firebase'in başlatılmasını bekle
+                if (!authInitialized) {
+                    await initializeFirebase();
+                }
+
+                log('INFO', 'Firebase auth ile giriş yapılıyor...');
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                log('INFO', 'Firebase auth girişi başarılı', { uid: userCredential.user.uid });
+
+                // Kullanıcı bilgilerini güncelle
+                await dbRefs.users.child(userCredential.user.uid).update({
+                    lastLogin: Date.now()
+                });
+                log('INFO', 'Kullanıcı son giriş zamanı güncellendi');
+
+                log('INFO', 'Giriş işlemi başarılı, ana sayfaya yönlendiriliyor...');
+                window.location.href = 'index.html';
+            } catch (error) {
+                log('ERROR', 'Giriş hatası:', error);
+                alert('Giriş yapılırken bir hata oluştu: ' + error.message);
+            }
+        }
+
+        // Kayıt işlemi
+        async function handleRegister(event) {
+            event.preventDefault();
+            
+            try {
+                if (!dbRefs) {
+                    log('ERROR', 'Firebase referansları henüz başlatılmadı');
+                    throw new Error('Firebase henüz başlatılmadı. Lütfen sayfayı yenileyin ve tekrar deneyin.');
+                }
+
+                const email = document.getElementById('registerEmail').value;
+                const username = document.getElementById('registerUsername').value;
+                const telegramUsername = document.getElementById('telegramUsername').value;
+                const password = document.getElementById('registerPassword').value;
+                const referralCode = document.getElementById('referralCode').value;
+
+                log('INFO', 'Kayıt formu verileri alındı', {
+                    email,
+                    username,
+                    telegramUsername,
+                    referralCode
+                });
+
+                if (!email || !username || !telegramUsername || !password || !referralCode) {
+                    log('ERROR', 'Eksik form alanları');
+                    throw new Error('Lütfen tüm alanları doldurun.');
+                }
+
+                log('INFO', 'Kayıt işlemi başlatılıyor...');
+                await registerUser(email, password, referralCode, username, telegramUsername);
+                log('INFO', 'Kayıt işlemi başarılı!');
+                alert('Kayıt başarılı! Giriş yapabilirsiniz.');
+                toggleForms('loginForm');
+            } catch (error) {
+                log('ERROR', 'Kayıt hatası:', error);
+                alert('Kayıt olurken bir hata oluştu: ' + error.message);
+            }
+        }
+
+        // Sayfa yüklendiğinde oturum kontrolü yap
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                log('INFO', 'Sayfa yüklendi, Firebase durumu kontrol ediliyor...');
+                
+                // Firebase'in başlatılmasını bekle
+                const user = await initializeFirebase();
+                log('INFO', 'Mevcut kullanıcı durumu:', user ? { uid: user.uid } : 'Oturum açılmamış');
+
+                if (user) {
+                    log('INFO', 'Kullanıcı oturum açmış, ana sayfaya yönlendiriliyor...');
+                    window.location.href = 'index.html';
+                }
+            } catch (error) {
+                log('ERROR', 'Oturum kontrolü hatası:', error);
+                console.error('Firebase başlatma hatası:', error);
+            }
+        });
+    </script>
+</body>
+</html> 

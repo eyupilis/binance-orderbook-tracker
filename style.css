@@ -1,0 +1,1849 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+
+:root {
+    --primary: #f0b90b;
+    --primary-dark: #e0aa0b;
+    --secondary: #26272b;
+    --secondary-light: #383a42;
+    --secondary-dark: #1e1f23;
+    --success: #0ecb81;
+    --danger: #f6465d;
+    --warning: #f0b90b;
+    --info: #0095ff;
+    --text-primary: #ffffff;
+    --text-secondary: #a9a9a9;
+    --green: #26c281;
+    --green-light: #33d990;
+    --green-dark: #20a86f;
+    --green-transparent: rgba(38, 194, 129, 0.1);
+    --red: #ed5565;
+    --red-light: #ff6b7b;
+    --red-dark: #da3545;
+    --red-transparent: rgba(237, 85, 101, 0.1);
+    --yellow: #f39c12;
+    --yellow-light: #ffad2c;
+    --yellow-dark: #d68910;
+    --yellow-transparent: rgba(243, 156, 18, 0.1);
+    --blue-light: #e3f2fd;
+    --panel-bg: #1c1d21;
+    --card-bg: #26272b;
+    --border-color: #383a42;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --success-bg: rgba(38, 194, 129, 0.1);
+    --error-bg: rgba(237, 85, 101, 0.1);
+    --hover-color: #2c2d32;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+    background-color: var(--panel-bg);
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+/* Banner Stili */
+.banner {
+    position: relative;
+    width: 100%;
+    min-height: 500px;
+    background: var(--panel-bg);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4rem 8%;
+}
+
+.banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(240, 185, 11, 0.1) 0%, transparent 70%);
+    animation: pulse 4s ease infinite;
+}
+
+.banner-content {
+    position: relative;
+    z-index: 2;
+    max-width: 650px;
+    animation: slideInLeft 1s ease;
+}
+
+.banner-title {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, var(--primary) 0%, #fff 50%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(var(--primary-rgb), 0.5);
+    animation: slideInDown 1s ease both;
+}
+
+.banner-subtitle {
+    font-size: 1.4rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    animation: slideInUp 1s ease 0.3s both;
+    text-shadow: 0 0 5px rgba(var(--primary-rgb), 0.3);
+}
+
+.banner-image {
+    position: relative;
+    z-index: 2;
+    width: 400px;
+    height: 400px;
+    object-fit: contain;
+    animation: float 6s ease-in-out infinite;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+}
+
+/* Banner İstatistikleri */
+.banner-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 3rem;
+    animation: fadeIn 1s ease 0.6s both;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: linear-gradient(135deg, var(--primary) 0%, #fff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary);
+}
+
+.stat-item i {
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, var(--primary) 0%, #fff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: pulse 2s ease infinite;
+}
+
+/* Sosyal Medya Platform Renkleri */
+.social-link[href*="twitter"],
+.social-link[href*="x.com"] {
+    --platform-color: #1DA1F2;
+}
+
+.social-link[href*="telegram"] {
+    --platform-color: #0088cc;
+}
+
+.social-link[href*="instagram"] {
+    --platform-color: #E4405F;
+}
+
+.social-link[href*="tiktok"] {
+    --platform-color: #000000;
+}
+
+.social-link[href*="youtube"] {
+    --platform-color: #FF0000;
+}
+
+.social-link:hover {
+    background: var(--platform-color);
+    color: white;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(var(--platform-color), 0.3);
+}
+
+.social-link:hover i {
+    color: white;
+}
+
+/* Animasyonlar */
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 5px rgba(var(--primary-rgb), 0.5); }
+    50% { box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.8); }
+    100% { box-shadow: 0 0 5px rgba(var(--primary-rgb), 0.5); }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes gradientText {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Responsive Tasarım */
+@media (max-width: 1200px) {
+    .banner {
+        padding: 3rem 5%;
+    }
+    
+    .banner-title {
+        font-size: 3.5rem;
+    }
+    
+    .banner-image {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 3rem 1rem;
+    }
+    
+    .banner-content {
+        margin-bottom: 2rem;
+    }
+    
+    .banner-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .banner-title {
+        font-size: 2.5rem;
+    }
+    
+    .banner-image {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+/* Container */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: var(--panel-bg);
+}
+
+/* App Header */
+.app-header {
+    background: var(--card-bg);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.app-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(30, 32, 38, 0.95) 0%, rgba(30, 32, 38, 0.85) 100%);
+    opacity: 0.8;
+    z-index: 1;
+}
+
+.app-logo {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-icon {
+    font-size: 2.5rem;
+    color: var(--primary);
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.app-logo h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary) 0%, #fff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Market Info */
+.market-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.info-item {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.info-item:hover {
+    transform: translateY(-5px);
+}
+
+.info-label {
+    display: block;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.info-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.info-change {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+}
+
+.change-up {
+    background-color: rgba(14, 203, 129, 0.1);
+    color: var(--success);
+}
+
+.change-down {
+    background-color: rgba(246, 70, 93, 0.1);
+    color: var(--danger);
+}
+
+/* Alert Stilleri */
+.alert {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    animation: slideIn 0.3s ease;
+    border-left: 4px solid;
+    transition: opacity 0.5s ease;
+}
+
+.alert-bid {
+    border-color: var(--success);
+    background: linear-gradient(135deg, rgba(14, 203, 129, 0.1) 0%, rgba(14, 203, 129, 0.05) 100%);
+}
+
+.alert-ask {
+    border-color: var(--danger);
+    background: linear-gradient(135deg, rgba(246, 70, 93, 0.1) 0%, rgba(246, 70, 93, 0.05) 100%);
+}
+
+.alert h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.alert-bid h3 i {
+    color: var(--success);
+}
+
+.alert-ask h3 i {
+    color: var(--danger);
+}
+
+.alert-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.alert-info span {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.alert-info strong {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.alert-timestamp {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Telegram Bağlantısı */
+.telegram-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #0088cc 0%, #0099ff 100%);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-left: 1rem;
+}
+
+.telegram-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 136, 204, 0.3);
+}
+
+.telegram-link i {
+    font-size: 1.2rem;
+}
+
+/* Status Badge */
+.status-indicator {
+    display: flex;
+    align-items: center;
+}
+
+.status-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.status-badge.online {
+    background: rgba(14, 203, 129, 0.1);
+    color: var(--success);
+}
+
+/* Telegram Entegrasyonu */
+.telegram-integration {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.telegram-integration h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+}
+
+.telegram-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.input-group input {
+    background: var(--secondary-dark);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* Butonlar */
+button {
+    background: var(--primary);
+    color: var(--secondary-dark);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+button.danger {
+    background: var(--danger);
+}
+
+button.success {
+    background: var(--success);
+}
+
+/* Order Book */
+.orderbook-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.orderbook-column {
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.orderbook-header {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.bids-header {
+    background: linear-gradient(135deg, rgba(14, 203, 129, 0.1) 0%, transparent 100%);
+}
+
+.asks-header {
+    background: linear-gradient(135deg, rgba(246, 70, 93, 0.1) 0%, transparent 100%);
+}
+
+.orderbook-stats {
+    display: flex;
+    gap: 1rem;
+}
+
+.stats-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.stats-icon {
+    color: var(--primary);
+}
+
+/* Tablo */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: var(--secondary-dark);
+    padding: 1rem;
+    text-align: right;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+td {
+    padding: 0.75rem 1rem;
+    text-align: right;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.bid-row:hover {
+    background: rgba(14, 203, 129, 0.05);
+}
+
+.ask-row:hover {
+    background: rgba(246, 70, 93, 0.05);
+}
+
+.price-value {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Animasyonlar */
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Yükleme Animasyonu */
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Tema Değiştirici */
+.theme-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--card-bg);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+.theme-toggle i {
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+/* Footer */
+.footer {
+    background: var(--card-bg);
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    margin-top: 3rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(240, 185, 11, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.footer-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.footer-section h3 {
+    color: var(--primary);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-section p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    font-size: 1.4rem;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-links.personal a {
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    padding: 0.75rem 1.25rem;
+    background: var(--card-bg);
+    gap: 0.75rem;
+}
+
+.social-links.personal a span {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.social-links a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.social-links a:hover::before {
+    opacity: 1;
+}
+
+.social-links a i {
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+/* Platform-specific styles */
+.social-links a.twitter {
+    border-color: #1DA1F2;
+}
+
+.social-links a.twitter:hover {
+    background: #1DA1F2;
+    box-shadow: 0 0 20px rgba(29, 161, 242, 0.3);
+    transform: translateY(-5px);
+}
+
+.social-links a.telegram {
+    border-color: #0088cc;
+}
+
+.social-links a.telegram:hover {
+    background: #0088cc;
+    box-shadow: 0 0 20px rgba(0, 136, 204, 0.3);
+    transform: translateY(-5px);
+}
+
+.social-links a.instagram {
+    border-color: #E4405F;
+}
+
+.social-links a.instagram:hover {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    box-shadow: 0 0 20px rgba(228, 64, 95, 0.3);
+    transform: translateY(-5px);
+}
+
+.social-links a.tiktok {
+    border-color: #000000;
+}
+
+.social-links a.tiktok:hover {
+    background: linear-gradient(45deg, #000000 0%, #25F4EE 50%, #FE2C55 100%);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+}
+
+.social-links a.youtube {
+    border-color: #FF0000;
+}
+
+.social-links a.youtube:hover {
+    background: #FF0000;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+    transform: translateY(-5px);
+}
+
+.social-links a:hover i {
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+.social-links.personal a:hover {
+    transform: translateY(-3px);
+}
+
+.social-links.personal a:hover i,
+.social-links.personal a:hover span {
+    color: var(--primary);
+}
+
+/* Footer Section Title */
+.footer-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--primary);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.footer-section h3 i {
+    font-size: 1.4rem;
+    background: linear-gradient(135deg, var(--primary) 0%, #fff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.contact-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.contact-info i {
+    color: var(--primary);
+}
+
+.footer-bottom {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-secondary);
+}
+
+.footer-bottom .copyright {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-bottom .last-update {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+/* Telegram Yardım */
+.telegram-help {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.telegram-help h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+}
+
+.telegram-help ol {
+    list-style-position: inside;
+    color: var(--text-secondary);
+}
+
+.telegram-help li {
+    margin-bottom: 0.5rem;
+}
+
+.telegram-help code {
+    background: var(--secondary-dark);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+.telegram-help a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.telegram-help a:hover {
+    text-decoration: underline;
+}
+
+/* Telegram Durum */
+.telegram-status {
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.telegram-status.success {
+    background: rgba(14, 203, 129, 0.1);
+    color: var(--success);
+}
+
+.telegram-status.error {
+    background: rgba(246, 70, 93, 0.1);
+    color: var(--danger);
+}
+
+/* Settings Bölümü */
+.settings {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.settings::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(240, 185, 11, 0.05) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+.settings .input-group {
+    position: relative;
+    z-index: 1;
+}
+
+.settings input {
+    width: 100%;
+    background: var(--secondary-dark);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.settings input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(240, 185, 11, 0.1);
+}
+
+.settings label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.settings button {
+    height: 45px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+
+.settings button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(240, 185, 11, 0.3);
+}
+
+.settings button.danger {
+    background: linear-gradient(135deg, var(--danger) 0%, var(--red-dark) 100%);
+}
+
+.settings button.danger:hover {
+    box-shadow: 0 4px 12px rgba(246, 70, 93, 0.3);
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.tab-btn {
+    background: var(--card-bg);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tab-btn:hover {
+    background: var(--hover-color);
+    transform: translateY(-2px);
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: var(--secondary-dark);
+}
+
+/* Order Book Tablosu */
+.orderbook-container {
+    max-height: 600px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--secondary-dark);
+}
+
+.orderbook-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.orderbook-container::-webkit-scrollbar-track {
+    background: var(--secondary-dark);
+    border-radius: 3px;
+}
+
+.orderbook-container::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 3px;
+}
+
+.orderbook-container table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.orderbook-container th {
+    position: sticky;
+    top: 0;
+    background: var(--secondary-dark);
+    padding: 1rem;
+    text-align: right;
+    color: var(--text-secondary);
+    font-weight: 500;
+    z-index: 10;
+}
+
+.orderbook-container td {
+    padding: 0.75rem 1rem;
+    text-align: right;
+    border-bottom: 1px solid var(--border-color);
+    font-family: 'Roboto Mono', monospace;
+}
+
+.bid-row, .ask-row {
+    transition: all 0.3s ease;
+}
+
+.bid-row:hover {
+    background: rgba(14, 203, 129, 0.1);
+}
+
+.ask-row:hover {
+    background: rgba(246, 70, 93, 0.1);
+}
+
+.bid-price {
+    color: var(--success);
+}
+
+.ask-price {
+    color: var(--danger);
+}
+
+/* Alert Container */
+.alert-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.alert {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    animation: slideIn 0.3s ease;
+    border-left: 4px solid;
+    position: relative;
+    overflow: hidden;
+}
+
+.alert::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+.alert-bid {
+    border-color: var(--success);
+    background: linear-gradient(135deg, rgba(14, 203, 129, 0.1) 0%, rgba(14, 203, 129, 0.05) 100%);
+}
+
+.alert-ask {
+    border-color: var(--danger);
+    background: linear-gradient(135deg, rgba(246, 70, 93, 0.1) 0%, rgba(246, 70, 93, 0.05) 100%);
+}
+
+.alert h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.alert-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.alert-info span {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.alert-info strong {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.alert-timestamp {
+    margin-top: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.8;
+}
+
+/* Alert ID Stili */
+.alert-id {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    opacity: 0.7;
+    font-family: 'Roboto Mono', monospace;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.alert-id i {
+    font-size: 0.8rem;
+}
+
+/* Telegram Yardım Notları */
+.telegram-help ul {
+    margin-left: 1.5rem;
+    margin-top: 0.5rem;
+    list-style-type: disc;
+    color: var(--text-secondary);
+}
+
+.telegram-help ul li {
+    margin-bottom: 0.5rem;
+}
+
+.telegram-help-note {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(240, 185, 11, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.telegram-help-note i {
+    color: var(--primary);
+    font-size: 1.2rem;
+    margin-top: 0.2rem;
+}
+
+.telegram-help-note p {
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Promosyon Kartları */
+.promo-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.promo-card {
+    background: rgba(30, 32, 38, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.promo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.platform-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.card-description {
+    color: var(--text-secondary);
+    margin: 1rem 0;
+    line-height: 1.5;
+}
+
+/* Telegram Kartı */
+.telegram-card .card-icon {
+    background: linear-gradient(135deg, #0088cc, #00a2ff);
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 1.5rem 0;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-primary);
+    display: block;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+}
+
+/* Başarı Kartı */
+.success-card .card-icon {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+.success-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.success-item {
+    background: var(--secondary);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.success-item:hover {
+    transform: scale(1.05);
+}
+
+.coin {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.profit {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.profit-up {
+    color: #2ecc71;
+}
+
+/* Komisyon Kartı */
+.commission-card .card-icon {
+    background: #fff;
+    padding: 0.5rem;
+}
+
+.referral-code {
+    background: rgba(20, 22, 26, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px;
+    margin: 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.code {
+    font-family: monospace;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.copy-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.discount-info {
+    margin: 1.5rem 0;
+}
+
+.discount-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+    color: var(--text-secondary);
+}
+
+/* Butonlar */
+.action-button {
+    background: linear-gradient(45deg, #2b2f36, #1a1d23);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px 24px;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.telegram-button {
+    background: linear-gradient(135deg, #0088cc, #00a2ff);
+    color: white;
+}
+
+.success-button {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+}
+
+.commission-button {
+    background: linear-gradient(135deg, #f1c40f, #f39c12);
+    color: white;
+}
+
+.button-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% { left: -100%; }
+    20% { left: 100%; }
+    100% { left: 100%; }
+}
+
+/* Sayaç Animasyonu */
+.counter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Auth sayfası stilleri */
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--panel-bg);
+    padding: 2rem;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.auth-form {
+    background: rgba(30, 32, 38, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.auth-form.hidden {
+    display: none;
+}
+
+.auth-header {
+    text-align: left;
+    margin-bottom: 2rem;
+    position: relative;
+    padding: 1rem;
+}
+
+.auth-logo {
+    width: 180px;
+    height: 180px;
+    margin-bottom: 1.5rem;
+    margin-left: -20px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.auth-logo:hover {
+    transform: translateY(-5px);
+}
+
+.auth-header h2 {
+    font-size: 2rem;
+    color: var(--text-color);
+    margin: 0.5rem 0;
+    font-weight: 600;
+}
+
+.auth-header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    opacity: 0.9;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.form-group label i {
+    margin-right: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.referral-info {
+    display: block;
+    margin-top: 8px;
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.referral-info i {
+    margin-right: 4px;
+    color: var(--primary);
+}
+
+.referral-info a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.auth-button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(45deg, var(--primary) 0%, var(--primary-light) 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.auth-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.auth-button i {
+    font-size: 18px;
+}
+
+.auth-links {
+    margin-top: 24px;
+    text-align: center;
+}
+
+.auth-links a {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.auth-links a:hover {
+    color: var(--primary-light);
+}
+
+/* Çıkış butonu */
+.logout-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background: rgba(255, 59, 48, 0.9);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.logout-button:hover {
+    background: rgba(255, 59, 48, 1);
+    transform: translateY(-2px);
+}
+
+.logout-button i {
+    font-size: 16px;
+}
+
+/* Header Styles */
+.main-header {
+    background: rgba(30, 32, 38, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.header-left h1 {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.logout-button {
+    background: rgba(255, 59, 48, 0.1);
+    color: rgb(255, 59, 48);
+    border: 1px solid rgba(255, 59, 48, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+    background: rgba(255, 59, 48, 0.2);
+    transform: translateY(-1px);
+}
+
+.logout-button i {
+    font-size: 1rem;
+}
+
+/* Container padding adjustment */
+.container {
+    padding-top: 2rem;
+}
+
