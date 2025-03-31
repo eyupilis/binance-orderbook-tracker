@@ -4,7 +4,7 @@
   "description": "Metrader Pro - Binance Order Book Tracker",
   "main": "app.js",
   "scripts": {
-    "start": "python3 -m http.server 8080",
+    "start": "node app.js",
     "deploy": "firebase deploy"
   },
   "repository": {
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/eyupilis/binance-orderbook-tracker#readme",
   "dependencies": {
+    "express": "^4.18.2",
     "firebase": "^9.6.1"
   }
 } 
