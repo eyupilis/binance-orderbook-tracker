@@ -1,0 +1,30 @@
+{
+  "name": "binance-orderbook-tracker",
+  "version": "1.0.0",
+  "description": "Metrader Pro - Binance Order Book Tracker",
+  "main": "app.js",
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "deploy": "firebase deploy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eyupilis/binance-orderbook-tracker.git"
+  },
+  "keywords": [
+    "binance",
+    "orderbook",
+    "tracker",
+    "trading",
+    "firebase"
+  ],
+  "author": "Eyyüp İliş",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eyupilis/binance-orderbook-tracker/issues"
+  },
+  "homepage": "https://github.com/eyupilis/binance-orderbook-tracker#readme",
+  "dependencies": {
+    "firebase": "^9.6.1"
+  }
+} 
